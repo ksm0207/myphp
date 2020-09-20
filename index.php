@@ -1,7 +1,5 @@
-<?php include $_SERVER['DOCUMENT_ROOT']."/db.php"; ?>
-
-<!DOCTYPE html>
-<html lang="en">
+<?php include  ("./db/db.php") ?>
+<!doctype html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,36 +20,33 @@
                 <th width="100">조회수</th>
             </tr>
         </thead>
-            <?php
-            // board 테이블에서 idx(고유번호) 기준으로 내림차순해서 5개까지 표시
-            $sql = mq('select * form board order by idx desc limit 0,5');
-            while ($board = $sql->fetch_array()) {
-                // title변수에 DB에서 가져온 title 선택하기
-                $title = $board['title']; // title변수안에 $board 테이블의 title값 저장
-                if (strlen($title) > 30) {
-                    // title이 30을 넘어간다면 ... 표시하기 <일정 문자길이를 초과하면 초과한 문자를 자르고 ... 출력
-                    $title = str_replace(
-                        $board['title'],
-                        mb_substr($board['title'], 0, 30, 'utf-8') . '...',
-                        $board['title']
-                    );
-                }
-            ?>
-            <tbody>
-                <tr>
-                    <td with="70"><?php echo $board["idx"]; ?> </td>
-                    <td with="500"><a href="#"><?php echo $title["idx"]; ?></a></td>
-                    <td with="120"><?php echo $board["name"]; ?> </td>
-                    <td with="100"><?php echo $board["date"]; ?> </td>
-                    <td with="100"><?php echo $board["hit"]; ?> </td>
-                </tr>
-            </tbody>
-        <?php } ?>
-        </table>
-        <div id="write_btn">
-                <a href="/page/board/write.php"><button>글쓰기</button> </a>
-        </div>
+        <?php
+         // board 테이블에서 idx(고유번호) 기준으로 내림차순해서 5개까지 표시
+          $sql = mq("select * from board order by idx desc limit 0,5"); 
+            while($board = $sql->fetch_array())
+            {
+              // title변수에 DB에서 가져온 title 선택하기
+              $title=$board["title"]; 
+              if(strlen($title)>30) // title이 30을 넘어간다면 ... 표시하기 <일정 문자길이를 초과하면 초과한 문자를 자르고 ... 출력
+              { 
+                //title이 30을 넘어서면 ...표시
+                $title=str_replace($board["title"],mb_substr($board["title"],0,30,"utf-8")."...",$board["title"]);
+              }
+        ?>
+      <tbody>
+        <tr>
+          <td width="70"><?php echo $board['idx']; ?></td>
+          <td width="500"><a href=""><?php echo $title;?></a></td>
+          <td width="120"><?php echo $board['name']?></td>
+          <td width="100"><?php echo $board['date']?></td>
+          <td width="100"><?php echo $board['hit']; ?></td>
+        </tr>
+      </tbody>
+      <?php } ?>
+    </table>
+    <div id="write_btn">
+      <a href="/page/board/write.php"><button>글쓰기</button></a>
     </div>
-    
+  </div>
 </body>
 </html>
